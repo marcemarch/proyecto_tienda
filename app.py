@@ -2,6 +2,7 @@ from flask import Flask, jsonify, render_template, request
 from flask_mysqldb import MySQL
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required
 
+    
 app = Flask(__name__)
 mysql = MySQL(app)
 
@@ -16,9 +17,9 @@ app.config['MYSQL_PASSWORD'] = ""
 app.config['MYSQL_DB'] = "tienda_db"
 
 @app.route('/')
-def inicio():   
-    
-    return render_template("nueva_categoria_text.html")
+def inicio(): 
+    return render_template("login.html")  
+    #return render_template("nueva_categoria_text.html")
     #return render_template("nueva_categoria.html")
     #return render_template("index.html")
     #return "Servidor ejecutandose!!! 😎"

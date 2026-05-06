@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Tiendita 2026</title>
+</head>
+<body>
+    <h2>Login Tienda 😎</h2>
+    
+    <p>
+    <input type="text" id="username" placeholder="usuario">
+    </p>
+    <p>
+    <input type="password" id="password" placeholder="password">
+    </p>
+    <p>
+    <button onclick="login()">Ingresar</button>
+    </p>
+
+    <h2>Producto</h2>
+    <button onclick="crearProducto()">Crear Producto</button>
+
+
+    <p id="mensaje"></p>
+
+
+    <script>
+        let token = "";
+        function login(){
+            const datos = {
+                username:document.getElementById('username').value,
+                password: document.getElementById('password').value
+            }
+            fetch('/login',
+                {
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify(datos)
+                }
+            )
+            .then(res => res.json())
+            .then(data => {
+                if(data.access_token){
+                    token = data.access_token;
+                    document.getElementById('mensaje').textContent='Login Correcto!!';
+                    //console.log(token);
+                }else{
+                    document.getElementById('mensaje').textContent='Error Login!!';
+                }
+            });
+        }
+
+        function crearProducto(){
+            const producto ={
+                nombre:'mesa gammer 3D',
+                precio: 2000,
+                stock: 20,
+                categoria_id:3
+            };
+
+            fetch('/productos', {
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body:JSON.stringify(producto)
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('mensaje').textContent = data.mensaje || data.msg;
+            });
+        }
+    </script>
+
+</body>
+</html>
