@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="nombre" placeholder="Categoria">
+    <input type="number" id="precio" placeholder="Precio">
+
+    <button onclick="enviar()">Registrar Categoria</button>
+
+    <p id="mensaje"></p>
+
+    <script>
+         function enviar(){
+            const categoria ={
+                nombre: document.getElementById('nombre').value,
+                precio: float.parse(document.getElementById('precio').value),
+                stock: document.getElementById('stcok').value,
+                categori_id: document.getElementById('categoria_id').value
+            };
+
+            fetch('/categorias', {
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify(categoria)
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('mensaje').textContent = data.mensaje;
+            });
+        }
+    </script>
+</body>
+</html>
